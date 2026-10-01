@@ -1,62 +1,63 @@
 # 🎬 OpenDezor
 
-Ein inoffizieller, unabhängiger iOS-Client im Stil von Dezor – für iPhone und iPad. 📱
+An unofficial, independent iOS client in the style of Dezor – for iPhone and iPad. 📱
 
-> ⚠️ **Inoffiziell.** OpenDezor steht in keiner Verbindung zu Dezor und wird von Dezor weder
-> unterstützt noch geprüft. „Dezor“ ist eine Marke ihres Inhabers. Dezor-Konto, VPN-Server und
-> Dienste gehören Dezor und unterliegen dessen Nutzungsbedingungen.
+🇬🇧 English · [🇩🇪 Deutsch](README.de.md)
 
----
-
-## ✨ Was die App kann
-
-- 🧩 **Addons per Link hinzufügen** – die App bringt selbst keine Inhalte und keine Addons mit
-- 🍿 **Filme & Serien** durchstöbern, mit Staffeln, Folgen und Fortsetzen
-- 📺 **Live-TV** mit Senderliste und Suche
-- 🛡️ **Wiedergabe nur über VPN** – mit Startbildschirm und „automatisch verbinden“
-- 🌐 **Eingebauter Browser**
-- ❤️ **Favoriten & Verlauf**, alles lokal auf deinem Gerät
-- 🖼️ **Bild-in-Bild, AirPlay** und Untertitel
-- 🌙 **Dunkles Design** mit flüssigen Animationen
-- 🔐 Optionale **Face-ID-Sperre**
-- 🇩🇪 🇬🇧 Deutsch und Englisch
+> ⚠️ **Unofficial.** OpenDezor is not affiliated with Dezor and is neither endorsed nor reviewed
+> by Dezor. “Dezor” is a trademark of its owner. The Dezor account, VPN servers and services
+> belong to Dezor and are subject to its terms of use.
 
 ---
 
-## 📲 So kommt die App auf dein iPhone
+## ✨ What the app does
 
-**Voraussetzung:** iPhone oder iPad mit **iOS 17** oder neuer. 📶
-
-1. ⬇️ Lade die Datei **`OpenDezor.ipa`** unter [Releases](../../releases) herunter.
-2. 🧰 Installiere sie mit einem dieser Programme:
-   - **[Sideloadly](https://sideloadly.io)** – Windows & Mac, iPhone per Kabel anschließen,
-     IPA hineinziehen, mit deiner Apple-ID anmelden, „Start“ drücken.
-   - **[AltStore](https://altstore.io)** – AltServer auf dem Computer, AltStore auf dem iPhone,
-     dann die IPA über „My Apps“ ➕ öffnen.
-   - **[TrollStore](https://github.com/opa334/TrollStore)** – nur auf unterstützten iOS-Versionen,
-     IPA direkt öffnen.
-3. ⚙️ Auf dem iPhone: **Einstellungen → Allgemein → VPN & Geräteverwaltung** → deiner Apple-ID
-   vertrauen.
-4. 🔓 Ab iOS 16: **Einstellungen → Datenschutz & Sicherheit → Entwicklermodus** einschalten und
-   neu starten.
-5. 🚀 OpenDezor öffnen – fertig!
-
-> 🔁 Mit einer kostenlosen Apple-ID läuft die App **7 Tage**. Danach einfach erneut über
-> Sideloadly oder AltStore aktualisieren.
+- 🧩 **Add addons by link** – the app itself ships no content and no addons
+- 🍿 **Browse films & series** with seasons, episodes and resume
+- 📺 **Live TV** with channel list and search
+- 🛡️ **Playback through the VPN only** – with a start screen and “connect automatically”
+- 🌐 **Built-in browser**
+- ❤️ **Favourites & history**, stored only on your device
+- 🖼️ **Picture-in-Picture, AirPlay** and subtitles
+- 🌙 **Dark design** with smooth animations
+- 🔐 Optional **Face ID lock**
+- 🇬🇧 🇩🇪 English and German
 
 ---
 
-## ⚖️ Hinweise
+## 📲 How to get it on your iPhone
 
-- 🚫 Die App enthält **keine Filme, Serien, Sender oder Addons** und empfiehlt auch keine.
-  Welche Quellen du hinzufügst und ob du sie nutzen darfst, entscheidest **du allein** –
-  bitte halte dich an das Urheberrecht und die Gesetze deines Landes.
-- 🔑 Die Dezor-Anmeldung läuft direkt bei Dezor; dafür gelten Dezors Nutzungsbedingungen
-  und Datenschutzhinweise.
-- 🧪 Hobbyprojekt, bereitgestellt **ohne Gewährleistung** – siehe [LICENSE](LICENSE).
+**Requirement:** iPhone or iPad running **iOS 17** or later. 📶
+
+1. ⬇️ Download **`OpenDezor.ipa`** from [Releases](../../releases).
+2. 🧰 Install it with one of these tools:
+   - **[Sideloadly](https://sideloadly.io)** – Windows & Mac: connect your iPhone by cable,
+     drop in the IPA, sign in with your Apple ID, press “Start”.
+   - **[AltStore](https://altstore.io)** – AltServer on your computer, AltStore on your iPhone,
+     then open the IPA via “My Apps” ➕.
+   - **[TrollStore](https://github.com/opa334/TrollStore)** – supported iOS versions only,
+     open the IPA directly.
+3. ⚙️ On your iPhone: **Settings → General → VPN & Device Management** → trust your Apple ID.
+4. 🔓 On iOS 16 and later: **Settings → Privacy & Security → Developer Mode** → turn it on and
+   restart.
+5. 🚀 Open OpenDezor – done!
+
+> 🔁 With a free Apple ID the app runs for **7 days**. Then simply refresh it with Sideloadly
+> or AltStore.
 
 ---
 
-## 📄 Lizenz
+## ⚖️ Notes
 
-[MIT](LICENSE) · gebaut mit ❤️ von **[MJY](https://github.com/MJY0002)**
+- 🚫 The app contains **no films, series, channels or addons** and recommends none. Which
+  sources you add, and whether you are allowed to use them, is **your decision alone** –
+  please respect copyright and the laws of your country.
+- 🔑 Signing in to Dezor happens directly with Dezor; Dezor's terms of use and privacy policy
+  apply.
+- 🧪 Hobby project, provided **without warranty** – see [LICENSE](LICENSE).
+
+---
+
+## 📄 License
+
+[MIT](LICENSE) · built with ❤️ by **[MJY](https://github.com/MJY0002)**
