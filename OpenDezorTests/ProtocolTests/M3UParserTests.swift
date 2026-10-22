@@ -69,3 +69,14 @@ final class M3UParserTests: XCTestCase {
         XCTAssertNil(player.sleepTimerMinutesRemaining)
     }
 }
+final class M3UParserValidationTests: XCTestCase {
+    func testNonPlaylistTextYieldsNoChannels() {
+        XCTAssertTrue(M3UParser.parse(content: "https://example.invalid/list.m3u").isEmpty)
+        XCTAssertTrue(M3UParser.parse(content: "<html>404</html>").isEmpty)
+    }
+
+    func testPlaylistWithNonStreamLineIsSkipped() {
+        let content = "#EXTM3U\n#EXTINF:-1,Eins\nhttps://example.com/a.m3u8\n#EXTINF:-1,Zwei\nnot a url\n"
+        XCTAssertEqual(M3UParser.parse(content: content).count, 1)
+    }
+}

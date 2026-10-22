@@ -383,6 +383,9 @@ public struct SettingsView: View {
             .navigationTitle(L("Einstellungen"))
             #if os(iOS)
             .navigationBarTitleDisplayMode(.inline)
+            // Without a bar material the title floats over whatever scrolls beneath it.
+            .toolbarBackground(.visible, for: .navigationBar)
+            .toolbarBackground(.bar, for: .navigationBar)
             #endif
             .alert(L("Verlauf leeren?"), isPresented: $showClearHistoryAlert) {
                 Button(L("Abbrechen"), role: .cancel) {}

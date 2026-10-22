@@ -106,8 +106,8 @@ public final class LocalizationController: ObservableObject {
         "Dunkel": "Dark",
         "Vorschau": "Preview",
         "Dezor VPN & Premium": "Dezor VPN & Premium",
-        "Hast du einen bezahlten Dezor Account? Du kannst ihn jetzt verknüpfen, um ohne 15-Minuten-Limit unbegrenzt zu streamen.":
-            "Got a paid Dezor account? Link it now to stream without the 15-minute limit.",
+        "Hast du einen bezahlten Dezor Account? Du kannst ihn jetzt verknüpfen, um ohne Zeitlimit unbegrenzt zu streamen.":
+            "Got a paid Dezor account? Link it now to stream without a time limit.",
         "Du kannst die Anmeldung auch jederzeit später in den Einstellungen durchführen.":
             "You can also sign in later from Settings.",
         "Connect-Code auf dezor.net:": "Connect code on dezor.net:",
@@ -407,6 +407,10 @@ public final class LocalizationController: ObservableObject {
         "URL-Link": "URL link",
         "M3U Playlist konnte nicht geladen werden": "The M3U playlist could not be loaded",
         "Sender erfolgreich importiert!": "channels imported successfully!",
+        "Keine Sender gefunden. Ist das eine gültige M3U-Playlist?": "No channels found. Is this a valid M3U playlist?",
+        "Der Stream startet nicht. Bitte wähle eine andere Quelle.": "The stream does not start. Please choose another source.",
+        "Tonspur": "Audio track",
+        "Wirklich abmelden?": "Really sign out?",
         "Sender entfernen": "Remove channel",
         "Alle importierten Sender löschen": "Delete all imported channels",
         "Alle benutzerdefinierten Sender wurden entfernt.": "All custom channels were removed.",

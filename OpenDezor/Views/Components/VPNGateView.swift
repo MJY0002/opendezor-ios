@@ -55,7 +55,10 @@ public struct VPNGateView: View {
         .onChange(of: vpn.isConnected) { _, connected in
             // Connected through this screen: step aside on our own.
             guard connected, attempted else { return }
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.9) { dismiss() }
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.9) {
+                dismiss()
+                appState.resumePendingPlaybackAfterVPN()
+            }
         }
     }
 
@@ -236,7 +239,10 @@ public struct VPNGateView: View {
     }
 
     private var laterButton: some View {
-        Button(L("Später – nur stöbern")) { dismiss() }
+        Button(L("Später – nur stöbern")) {
+            appState.discardPendingPlaybackAfterVPN()
+            dismiss()
+        }
             .appFont(size: 14, weight: .medium)
             .foregroundColor(AppTheme.textSecondary)
             .padding(.vertical, 6)

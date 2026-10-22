@@ -221,6 +221,30 @@ public class PlayerService: NSObject, ObservableObject {
         player.play()
         self.isPlaying = true
         self.playbackRate = 1.0
+        startStallWatchdog(for: playerItem)
+    }
+
+    // MARK: - Stall watchdog
+    private var stallWatchdog: Task<Void, Never>?
+
+    /// A dead stream often never reports `.failed` — the item just sits there with no
+    /// picture at 00:00. Without this the user stares at a black screen and the next
+    /// source is never tried.
+    private func startStallWatchdog(for item: AVPlayerItem) {
+        stallWatchdog?.cancel()
+        stallWatchdog = Task { @MainActor [weak self, weak item] in
+            try? await Task.sleep(nanoseconds: 30_000_000_000)
+            guard !Task.isCancelled, let self, let item,
+                  self.player?.currentItem === item, self.isPlaying else { return }
+            let hasPicture = item.status == .readyToPlay && (self.player?.currentTime().seconds ?? 0) > 0.1
+            guard !hasPicture else { return }
+            self.isBuffering = false
+            if let handler = self.onPlaybackFailed {
+                handler(nil)
+            } else {
+                self.errorMessage = L("Der Stream startet nicht. Bitte wähle eine andere Quelle.")
+            }
+        }
     }
     
     // MARK: - Observe Item Status & Buffering
@@ -379,7 +403,10 @@ public class PlayerService: NSObject, ObservableObject {
             var audioTracks: [AudioTrackOption] = []
             if let audioGroup = try? await asset.loadMediaSelectionGroup(for: .audible) {
                 for option in audioGroup.options {
-                    let name = option.displayName
+                    // AVFoundation hands out "Unknown" for untitled tracks; number them instead.
+                    let rawName = option.displayName
+                    let name = (rawName.isEmpty || rawName.lowercased() == "unknown")
+                        ? "\(L("Tonspur")) \(audioTracks.count + 1)" : rawName
                     let lang = option.extendedLanguageTag ?? option.locale?.identifier
                     let track = AudioTrackOption(
                         id: option.displayName + (lang ?? ""),
@@ -594,6 +621,7 @@ public class PlayerService: NSObject, ObservableObject {
     
     // MARK: - Stop & Cleanup
     public func stopAndCleanup() {
+        stallWatchdog?.cancel()
         onPlaybackFailed = nil
         onPlaybackEnded = nil
         saveHistory()

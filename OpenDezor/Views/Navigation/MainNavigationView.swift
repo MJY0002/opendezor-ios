@@ -67,6 +67,8 @@ public struct MainNavigationView: View {
                 LibraryView { item in
                     appState.selectedMediaDetail = item
                 }
+                // The addon URL field otherwise keeps the keyboard over the tab bar.
+                .scrollDismissesKeyboard(.interactively)
                 .tabItem {
                     Label(AppTab.library.title, systemImage: AppTab.library.iconName)
                 }

@@ -226,6 +226,11 @@ public class VPNManager: ObservableObject {
     // MARK: - Connect / disconnect
 
     public func toggleVPN() {
+        // Switched on but never connected (failed attempt): a tap means "try again".
+        if isEnabled && !isConnected && !isConnecting {
+            restartTunnel()
+            return
+        }
         setEnabled(!isEnabled)
     }
 
@@ -569,7 +574,7 @@ public class VPNManager: ObservableObject {
 
     /// Switches the VPN on if needed and waits until it has proven itself, or until
     /// `timeout` passes. Playback calls this so a film never starts outside the tunnel.
-    public func ensureConnected(timeout: TimeInterval = 25) async -> Bool {
+    public func ensureConnected(timeout: TimeInterval = 15) async -> Bool {
         if isConnected { return true }
         if !isEnabled { setEnabled(true) }
         let deadline = Date().addingTimeInterval(timeout)

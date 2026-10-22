@@ -215,7 +215,7 @@ public struct CustomPlayerView: View {
     
     private func startHideControlsTimer() {
         controlsTimer?.invalidate()
-        controlsTimer = Timer.scheduledTimer(withTimeInterval: 4.0, repeats: false) { _ in
+        controlsTimer = Timer.scheduledTimer(withTimeInterval: 6.0, repeats: false) { _ in
             Task { @MainActor in
                 if self.playerService.isPlaying && !self.playerService.isBuffering {
                     withAnimation(.easeInOut(duration: 0.25)) {

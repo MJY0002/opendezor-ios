@@ -189,7 +189,7 @@ public enum AppLanguage: String, Codable, CaseIterable, Identifiable {
         switch self {
         case .system: return "globe"
         case .german: return "🇩🇪"
-        case .english: return "🇬🇧"
+        case .english: return "🇺🇸"
         }
     }
 }

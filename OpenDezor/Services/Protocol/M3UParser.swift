@@ -6,6 +6,9 @@ public struct M3UParser {
     /// Parses an M3U playlist string into an array of MediaItem channel objects.
     public static func parse(content: String, defaultCategory: String = "Allgemein") -> [MediaItem] {
         var items: [MediaItem] = []
+        // Anything that is not a playlist (an HTML error page, a stray URL, plain text)
+        // must not turn into a phantom channel.
+        guard content.contains("#EXTM3U") || content.contains("#EXTINF") else { return [] }
         let lines = content.components(separatedBy: .newlines)
         
         var currentTvgId: String? = nil
@@ -42,7 +45,10 @@ public struct M3UParser {
             } else {
                 // This is the stream URL line
                 let urlString = line
-                guard let _ = URL(string: urlString) else { continue }
+                guard let streamUrl = URL(string: urlString),
+                      let scheme = streamUrl.scheme?.lowercased(),
+                      ["http", "https", "rtmp", "rtsp", "udp", "rtp"].contains(scheme),
+                      streamUrl.host?.isEmpty == false else { continue }
                 
                 let displayName = currentChannelName ?? currentTvgName ?? L("IPTV Sender")
                 let category = currentGroupTitle ?? defaultCategory

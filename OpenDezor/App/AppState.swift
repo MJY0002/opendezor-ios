@@ -214,7 +214,9 @@ public class AppState: ObservableObject {
         isPreparingPlayback = true
         defer { isPreparingPlayback = false }
         // The source lookup already tells the addon what is about to be watched.
-        guard await requireVPN() else { return }
+        guard await requireVPN(resume: { [weak self] in
+            await self?.startPlaybackResolvingSource(item: item, episode: episode)
+        }) else { return }
         let detail = DetailViewModel(item: item)
         var episode = episode
         // A series tile carries no episodes, and asking the addon for sources without one
@@ -281,12 +283,25 @@ public class AppState: ObservableObject {
 
     /// Connects the VPN if needed, or explains why nothing plays and offers the VPN
     /// screen. Every playback entry point calls this before talking to the addon.
-    public func requireVPN() async -> Bool {
+    public func requireVPN(resume: (@MainActor () async -> Void)? = nil) async -> Bool {
         if await VPNManager.shared.ensureConnected() { return true }
         showToast(message: L("Wiedergabe läuft nur über das VPN. Bitte verbinde das VPN."), isError: true)
+        pendingAfterVPN = resume
         isVPNGatePresented = true
         return false
     }
+
+    /// What the user was starting when the VPN gate interrupted them; run once the
+    /// tunnel is up, so connecting does not drop them back at the channel list.
+    private var pendingAfterVPN: (@MainActor () async -> Void)?
+
+    public func resumePendingPlaybackAfterVPN() {
+        guard let pending = pendingAfterVPN else { return }
+        pendingAfterVPN = nil
+        Task { @MainActor in await pending() }
+    }
+
+    public func discardPendingPlaybackAfterVPN() { pendingAfterVPN = nil }
 
     /// Takes the next untried source and starts it. Called again by the player's failure
     /// callback, so a broken server advances instead of dead-ending.
@@ -297,8 +312,7 @@ public class AppState: ObservableObject {
     private func playNextAvailableSource() async {
         guard var current = session else { return }
 
-        guard await requireVPN() else {
-            session = nil
+        guard await requireVPN(resume: { [weak self] in await self?.playNextAvailableSource() }) else {
             return
         }
 
@@ -365,6 +379,8 @@ public class AppState: ObservableObject {
         }
 
         session = nil
+        // Every source failed: leave the black player instead of stranding the user in it.
+        if isPlayerPresented { dismissPlayer() }
         showToast(
             message: "\(L("Stream konnte nicht geladen werden")): \(L("Keine Videoquellen für diesen Titel gefunden."))",
             isError: true

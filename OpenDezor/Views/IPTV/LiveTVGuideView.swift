@@ -411,12 +411,14 @@ public struct ImportM3USheetView: View {
         Task {
             do {
                 let count = try await viewModel.importM3U(from: input)
-                isSuccess = true
-                statusMessage = "\(count) \(L("Sender erfolgreich importiert!"))"
+                isSuccess = count > 0
                 if count > 0 {
+                    statusMessage = "\(count) \(L("Sender erfolgreich importiert!"))"
                     DispatchQueue.main.asyncAfter(deadline: .now() + 1.2) {
                         dismiss()
                     }
+                } else {
+                    statusMessage = L("Keine Sender gefunden. Ist das eine gültige M3U-Playlist?")
                 }
             } catch {
                 isSuccess = false

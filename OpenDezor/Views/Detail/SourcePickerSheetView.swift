@@ -45,11 +45,11 @@ public struct SourcePickerSheetView: View {
                     } else {
                         List {
                             Section {
-                                ForEach(viewModel.availableSources) { source in
+                                ForEach(uniqueSources) { source in
                                     sourceRow(source: source)
                                 }
                             } header: {
-                                Text("\(L("Verfügbare Streams")) (\(viewModel.availableSources.count))")
+                                Text("\(L("Verfügbare Streams")) (\(uniqueSources.count))")
                                     .appFont(size: 13, weight: .semibold)
                                     .foregroundColor(AppTheme.textSecondary)
                             }
@@ -151,5 +151,11 @@ public struct SourcePickerSheetView: View {
             .contentShape(Rectangle())
         }
         .buttonStyle(ScaleCardButtonStyle())
+    }
+
+    /// The same stream URL listed twice is one source, not two rows.
+    private var uniqueSources: [MediaSource] {
+        var seen = Set<String>()
+        return viewModel.availableSources.filter { seen.insert($0.url).inserted }
     }
 }

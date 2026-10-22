@@ -11,6 +11,7 @@ public struct AccountView: View {
     @State private var password: String = ""
     @State private var manualToken: String = ""
     @State private var showCopiedAlert: Bool = false
+    @State private var confirmLogout: Bool = false
     @State private var showForgotPasswordHelp: Bool = false
     @State private var localErrorMessage: String? = nil
     
@@ -484,10 +485,7 @@ public struct AccountView: View {
             Divider().background(AppTheme.surfaceBorder)
             
             // Logout Button
-            Button(action: {
-                Task { await authService.logout() }
-                appState.showToast(message: L("Abgemeldet."))
-            }) {
+            Button(action: { confirmLogout = true }) {
                 HStack {
                     Image(systemName: "rectangle.portrait.and.arrow.right")
                     Text(L("Abmelden"))
@@ -502,6 +500,13 @@ public struct AccountView: View {
                     RoundedRectangle(cornerRadius: 10)
                         .stroke(AppTheme.destructive.opacity(0.4), lineWidth: 1)
                 )
+            }
+            .confirmationDialog(L("Wirklich abmelden?"), isPresented: $confirmLogout, titleVisibility: .visible) {
+                Button(L("Abmelden"), role: .destructive) {
+                    Task { await authService.logout() }
+                    appState.showToast(message: L("Abgemeldet."))
+                }
+                Button(L("Abbrechen"), role: .cancel) {}
             }
         }
         .padding(20)

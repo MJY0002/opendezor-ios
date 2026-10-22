@@ -1,14 +1,12 @@
 import SwiftUI
 
 public struct OmniboxView: View {
-    @StateObject private var viewModel = OmniboxViewModel()
+    @ObservedObject var viewModel: OmniboxViewModel
     @ObservedObject var appState: AppState = .shared
     @FocusState private var isFieldFocused: Bool
     
-    public var onSelectMediaItem: (MediaItem) -> Void
-    
-    public init(onSelectMediaItem: @escaping (MediaItem) -> Void) {
-        self.onSelectMediaItem = onSelectMediaItem
+    public init(viewModel: OmniboxViewModel) {
+        self.viewModel = viewModel
     }
     
     public var body: some View {
@@ -148,27 +146,6 @@ public struct OmniboxView: View {
                 }
                 .padding(.top, 4)
             }
-            
-            // Search Results Grid
-            if !viewModel.searchResults.isEmpty {
-                VStack(alignment: .leading, spacing: 10) {
-                    Text("\(L("Suchergebnisse")) (\(viewModel.searchResults.count))")
-                        .appFont(size: 14, weight: .bold)
-                        .foregroundColor(AppTheme.textPrimary)
-                        .padding(.horizontal, 4)
-                    
-                    ScrollView(.horizontal, showsIndicators: false) {
-                        LazyHStack(spacing: 12) {
-                            ForEach(viewModel.searchResults) { item in
-                                MediaCardView(item: item, shape: .portrait) {
-                                    onSelectMediaItem(item)
-                                }
-                            }
-                        }
-                    }
-                }
-                .padding(.top, 8)
-            }
         }
         .padding(.horizontal, 16)
         .padding(.top, 8)
@@ -220,5 +197,40 @@ public struct OmniboxView: View {
         }
         .padding(14)
         .glassCard(cornerRadius: 16, strokeColor: AppTheme.cyanAccent.opacity(0.4), fillColor: AppTheme.surface.opacity(0.95))
+    }
+}
+
+/// The search results. They live in the page content, not in the pinned search bar:
+/// inside the bar they inherited its height and its shared row with the VPN pill.
+public struct OmniboxResultsView: View {
+    @ObservedObject var viewModel: OmniboxViewModel
+    public var onSelectMediaItem: (MediaItem) -> Void
+
+    public init(viewModel: OmniboxViewModel, onSelectMediaItem: @escaping (MediaItem) -> Void) {
+        self.viewModel = viewModel
+        self.onSelectMediaItem = onSelectMediaItem
+    }
+
+    public var body: some View {
+        if !viewModel.searchResults.isEmpty {
+            VStack(alignment: .leading, spacing: 10) {
+                Text("\(L("Suchergebnisse")) (\(viewModel.searchResults.count))")
+                    .appFont(size: 14, weight: .bold)
+                    .foregroundColor(AppTheme.textPrimary)
+                    .padding(.horizontal, 20)
+
+                ScrollView(.horizontal, showsIndicators: false) {
+                    LazyHStack(spacing: 12) {
+                        ForEach(viewModel.searchResults) { item in
+                            MediaCardView(item: item, shape: .portrait) {
+                                onSelectMediaItem(item)
+                            }
+                        }
+                    }
+                    .padding(.horizontal, 20)
+                }
+            }
+            .padding(.top, 8)
+        }
     }
 }

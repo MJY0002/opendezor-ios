@@ -157,7 +157,8 @@ public struct MediaDetailView: View {
                 // Play Button
                 Button(action: {
                     selectedEpisodeForSource = viewModel.selectedEpisode
-                    showSourcePicker = true
+                    // Source lookups go through the VPN and fail closed without it.
+                    Task { if await appState.requireVPN() { showSourcePicker = true } }
                 }) {
                     HStack(spacing: 8) {
                         Image(systemName: "play.fill")

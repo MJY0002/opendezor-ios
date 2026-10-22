@@ -544,7 +544,7 @@ public struct OnboardingView: View {
                     .appFont(size: 24, weight: .bold)
                     .foregroundColor(AppTheme.textPrimary)
                 
-                Text(L("Hast du einen bezahlten Dezor Account? Du kannst ihn jetzt verknüpfen, um ohne 15-Minuten-Limit unbegrenzt zu streamen."))
+                Text(L("Hast du einen bezahlten Dezor Account? Du kannst ihn jetzt verknüpfen, um ohne Zeitlimit unbegrenzt zu streamen."))
                     .appFont(size: 13)
                     .foregroundColor(AppTheme.textSecondary)
                     .multilineTextAlignment(.center)

@@ -2,6 +2,7 @@ import SwiftUI
 
 public struct DashboardView: View {
     @StateObject private var viewModel = DashboardViewModel()
+    @StateObject private var omnibox = OmniboxViewModel()
     @ObservedObject var appState: AppState = .shared
     @ObservedObject private var addonManager: AddonManager = .shared
     
@@ -20,6 +21,9 @@ public struct DashboardView: View {
         ScrollView(.vertical, showsIndicators: false) {
             VStack(spacing: 20) {
                 
+                // Search results replace nothing — they sit above the page content.
+                OmniboxResultsView(viewModel: omnibox, onSelectMediaItem: onSelectMediaItem)
+
                 // Hero: a rotating carousel once several titles have wide artwork,
                 // otherwise the single banner.
                 if viewModel.heroItems.count > 1 {
@@ -67,9 +71,7 @@ public struct DashboardView: View {
         // Everything plays through the VPN, so its state belongs where playback starts.
         .safeAreaInset(edge: .top, spacing: 0) {
             HStack(spacing: 10) {
-                OmniboxView { item in
-                    onSelectMediaItem(item)
-                }
+                OmniboxView(viewModel: omnibox)
                 VPNStatusPill()
                     .padding(.trailing, 16)
             }

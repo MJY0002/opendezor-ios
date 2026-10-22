@@ -164,15 +164,15 @@ public struct VPNSettingsSheetView: View {
                 }
             }) {
                 HStack(spacing: 8) {
-                    Image(systemName: vpnManager.isEnabled ? "power" : "bolt.shield.fill")
-                    Text(vpnManager.isEnabled ? L("VPN Trennen") : L("VPN Verbinden"))
+                    Image(systemName: holdsTunnel ? "power" : "bolt.shield.fill")
+                    Text(holdsTunnel ? L("VPN Trennen") : L("VPN Verbinden"))
                 }
                 .appFont(size: 14, weight: .bold)
                 .foregroundColor(.white)
                 .frame(maxWidth: 220)
                 .padding(.vertical, 12)
                 .background(
-                    Capsule().fill(vpnManager.isEnabled ? AppTheme.destructive : AppTheme.cyanAccent)
+                    Capsule().fill(holdsTunnel ? AppTheme.destructive : AppTheme.cyanAccent)
                 )
             }
             .padding(.top, 4)
@@ -313,4 +313,8 @@ public struct VPNSettingsSheetView: View {
             }
         }
     }
+
+    /// "Trennen" only while there is something to disconnect. After a failed attempt the
+    /// switch is still on but nothing is connected, so the button must offer "Verbinden".
+    private var holdsTunnel: Bool { vpnManager.isConnected || vpnManager.isConnecting }
 }
