@@ -20,7 +20,6 @@ An unofficial, independent iOS client in the style of Dezor – for iPhone and i
 - ❤️ **Favourites & history**, stored only on your device
 - 🖼️ **Picture-in-Picture, AirPlay** and subtitles
 - 🌙 **Dark design** with smooth animations
-- 🔐 Optional **Face ID lock**
 - 🇬🇧 🇩🇪 English and German
 
 ---

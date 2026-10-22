@@ -2,9 +2,13 @@
 
 Fehlerbehebungs-Release nach einem vollständigen manuellen Durchlauf der App im iOS-Simulator
 (iPhone 17 Pro, iOS 26.5, Hoch- und Querformat). Alle gefundenen Fehler sind unten aufgeführt –
-mit Status. Die 133 Unit-Tests laufen durch (2 neu für den M3U-Parser).
+mit Status. Alle Unit-Tests laufen durch (2 neu für den M3U-Parser).
 
 Hinweis: Die IPA ist ad-hoc signiert (Sideloading über AltStore / Sideloadly / TrollStore), wie 1.0.0.
+
+## Entfernt
+
+- **App-Sperre (Face ID / Passcode beim Start)**: Einstellung, Sperrbildschirm und `NSFaceIDUsageDescription` sind entfernt. Die App startet ohne Entsperr-Abfrage (löst zugleich F15). 132 Unit-Tests (der Test der Sperr-Einstellung entfällt).
 
 ## Behoben
 
@@ -31,14 +35,14 @@ Hinweis: Die IPA ist ad-hoc signiert (Sideloading über AltStore / Sideloadly / 
 - **F4** Fehler-Toast im Addon-Dialog liegt über der Tastatur – durch F3 (Tastatur schließt beim Scrollen) entschärft, Position nicht geändert.
 - **F6** Erster Tipp auf „Add" geht ins Leere, wenn sich das Layout beim Einblenden der Tastatur verschiebt.
 - **F11** Kosmetik: Seitenpunkte im Onboarding (heller Modus) schwach sichtbar, leicht unterschiedliche Überschrift-Einrückung auf Discover, Live-TV ohne EPG-Daten/Logos, doppelte Addon-Installation (Bibliothek und Einstellungen), „Angesagte" und „Beliebte Serien" zeigen dieselben Titel (Addon-Daten).
-- **F15** Bei aktiver App-Sperre fragt iOS auf Geräten/Simulatoren mit Passcode den System-Passcode ab (Verhalten von `LocalAuthentication` mit `.deviceOwnerAuthentication`, kein App-Fehler).
+- **F15** (System-Passcode-Dialog der App-Sperre) hat sich durch das Entfernen der App-Sperre erledigt.
 - **F17** „Fit"-Taste im Player: Wirkung im Test nicht erkennbar (nicht abschließend geklärt).
 - Doppel-Tipp-Geste (±10 s) kann zwei schnelle Taps auf Steuerelemente schlucken.
 - Live-TV-Streams der getesteten Quelle waren tot oder blockiert; die App zeigt das jetzt als Fehler an, die Quelle liegt außerhalb der App.
 
 ## Nicht getestet
 
-Abmelden/Anmelden/Connect-Code-Ablauf, PiP/AirPlay, Gesichtserkennung (Face ID), Onboarding im Querformat.
+Abmelden/Anmelden/Connect-Code-Ablauf, PiP/AirPlay, Onboarding im Querformat.
 
 ## Änderungen im Detail
 

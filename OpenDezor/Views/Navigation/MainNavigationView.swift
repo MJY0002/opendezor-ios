@@ -1,7 +1,6 @@
 import SwiftUI
 
 public struct MainNavigationView: View {
-    @Environment(\.scenePhase) private var scenePhase
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
     @ObservedObject var appState: AppState = .shared
     @ObservedObject private var theme: ThemeController = .shared
@@ -136,7 +135,7 @@ public struct MainNavigationView: View {
         }
         .syncsSystemAppearance()
         .overlay {
-            if appState.isVPNGatePresented, !appState.isAppLocked, !appState.isLaunching,
+            if appState.isVPNGatePresented, !appState.isLaunching,
                appState.hasCompletedOnboarding {
                 VPNGateView()
                     // In from the bottom, out the same way; a cross-fade with Reduce Motion.
@@ -145,11 +144,7 @@ public struct MainNavigationView: View {
             }
         }
         .overlay {
-            if appState.isAppLocked {
-                BiometricLockOverlayView(appState: appState)
-                    .transition(.opacity)
-                    .zIndex(150)
-            } else if appState.isLaunching {
+            if appState.isLaunching {
                 LaunchAnimationView {
                     withAnimation(.easeOut(duration: 0.3)) {
                         appState.isLaunching = false
@@ -157,120 +152,11 @@ public struct MainNavigationView: View {
                         if !StorageService.shared.settings.vpnAutoConnect, !VPNManager.shared.isConnected {
                             appState.isVPNGatePresented = true
                         }
-                        if StorageService.shared.settings.requireBiometrics {
-                            appState.authenticateBiometrics()
-                        }
                     }
                 }
                 .transition(.opacity)
                 .zIndex(200)
             }
-        }
-        .onChange(of: scenePhase) { _, newPhase in
-            if newPhase == .background {
-                appState.lockApp()
-            } else if newPhase == .active {
-                if StorageService.shared.settings.requireBiometrics && appState.isAppLocked {
-                    appState.authenticateBiometrics()
-                }
-            }
-        }
-    }
-}
-
-public struct BiometricLockOverlayView: View {
-    @ObservedObject var appState: AppState
-    
-    public var body: some View {
-        ZStack {
-            AppTheme.background.ignoresSafeArea()
-            
-            VStack(spacing: 24) {
-                Spacer()
-                
-                ZStack {
-                    Circle()
-                        .fill(AppTheme.accentGradient)
-                        .frame(width: 88, height: 88)
-                        .blur(radius: 12)
-                        .opacity(0.6)
-                    
-                    Circle()
-                        .fill(AppTheme.surface)
-                        .frame(width: 80, height: 80)
-                        .overlay(
-                            Circle().strokeBorder(Color.white.opacity(0.15), lineWidth: 1)
-                        )
-                    
-                    Image(systemName: "lock.shield.fill")
-                        .appFont(size: 38)
-                        .foregroundColor(AppTheme.cyanAccent)
-                }
-                
-                VStack(spacing: 8) {
-                    Text(L("OpenDezor ist gesperrt"))
-                        .appFont(size: 20, weight: .bold)
-                        .foregroundColor(AppTheme.textPrimary)
-                    
-                    Text(L("Verwende Face ID, Touch ID oder deinen Geräte-Code, um fortzufahren."))
-                        .appFont(size: 14)
-                        .foregroundColor(AppTheme.textSecondary)
-                        .multilineTextAlignment(.center)
-                        .padding(.horizontal, 32)
-                }
-                
-                VStack(spacing: 12) {
-                    Button(action: {
-                        appState.authenticateBiometrics()
-                    }) {
-                        HStack(spacing: 10) {
-                            Image(systemName: "faceid")
-                                .appFont(size: 18)
-                            Text(L("Mit Face ID entsperren"))
-                                .appFont(size: 15, weight: .bold)
-                        }
-                        .foregroundColor(.white)
-                        .frame(maxWidth: 260)
-                        .padding(.vertical, 14)
-                        .background(
-                            Capsule().fill(AppTheme.cyanAccent)
-                        )
-                    }
-                    
-                    // Escape hatches exist only where biometrics cannot work at all.
-                    // On a real device they would make the lock meaningless: anyone
-                    // holding the phone could tap straight past it.
-                    #if targetEnvironment(simulator)
-                    Button(action: {
-                        appState.unlockDirectly()
-                    }) {
-                        HStack(spacing: 8) {
-                            Image(systemName: "key.fill")
-                                .appFont(size: 13)
-                            Text(L("Ohne Face ID entsperren (nur Simulator)"))
-                                .appFont(size: 13, weight: .medium)
-                        }
-                        .foregroundColor(AppTheme.textSecondary)
-                        .padding(.vertical, 8)
-                    }
-
-                    Button(action: {
-                        appState.disableBiometricLock()
-                    }) {
-                        Text(L("Sperre ausschalten & deaktivieren"))
-                            .appFont(size: 12)
-                            .foregroundColor(AppTheme.destructive)
-                    }
-                    .padding(.top, 4)
-                    #endif
-                }
-                .padding(.top, 12)
-                
-                Spacer()
-            }
-        }
-        .onAppear {
-            appState.authenticateBiometrics()
         }
     }
 }

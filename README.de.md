@@ -20,7 +20,6 @@ Ein inoffizieller, unabhängiger iOS-Client im Stil von Dezor – für iPhone un
 - ❤️ **Favoriten & Verlauf**, alles lokal auf deinem Gerät
 - 🖼️ **Bild-in-Bild, AirPlay** und Untertitel
 - 🌙 **Dunkles Design** mit flüssigen Animationen
-- 🔐 Optionale **Face-ID-Sperre**
 - 🇩🇪 🇬🇧 Deutsch und Englisch
 
 ---

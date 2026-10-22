@@ -1,8 +1,5 @@
 import SwiftUI
 import Combine
-#if canImport(LocalAuthentication)
-import LocalAuthentication
-#endif
 
 public enum AppTab: String, CaseIterable, Identifiable {
     case dashboard = "Entdecken"
@@ -74,7 +71,6 @@ public class AppState: ObservableObject {
     /// True until the launch animation has played. Shown on every cold start, whether or
     /// not onboarding is done.
     @Published public var isLaunching: Bool = true
-    @Published public var isAppLocked: Bool = false
     @Published public var hasCompletedOnboarding: Bool {
         didSet {
             UserDefaults.standard.set(hasCompletedOnboarding, forKey: onboardingKey)
@@ -83,59 +79,6 @@ public class AppState: ObservableObject {
     
     public init() {
         self.hasCompletedOnboarding = UserDefaults.standard.bool(forKey: onboardingKey)
-        if StorageService.shared.settings.requireBiometrics {
-            self.isAppLocked = true
-        }
-    }
-    
-    public func authenticateBiometrics() {
-        #if canImport(LocalAuthentication)
-        let context = LAContext()
-        var error: NSError?
-        let reason = L("Entsperre OpenDezor mit Face ID oder Touch ID")
-        
-        if context.canEvaluatePolicy(.deviceOwnerAuthentication, error: &error) {
-            context.evaluatePolicy(.deviceOwnerAuthentication, localizedReason: reason) { success, _ in
-                DispatchQueue.main.async {
-                    if success {
-                        withAnimation(.easeInOut(duration: 0.3)) {
-                            self.isAppLocked = false
-                        }
-                    }
-                }
-            }
-        } else {
-            // Biometrics not supported on simulator/hardware without passcode
-            withAnimation {
-                self.isAppLocked = false
-            }
-        }
-        #else
-        withAnimation {
-            self.isAppLocked = false
-        }
-        #endif
-    }
-    
-    public func lockApp() {
-        if StorageService.shared.settings.requireBiometrics {
-            self.isAppLocked = true
-        }
-    }
-    
-    public func unlockDirectly() {
-        withAnimation(.easeInOut(duration: 0.25)) {
-            self.isAppLocked = false
-        }
-    }
-    
-    public func disableBiometricLock() {
-        withAnimation(.easeInOut(duration: 0.25)) {
-            self.isAppLocked = false
-            var currentSettings = StorageService.shared.settings
-            currentSettings.requireBiometrics = false
-            StorageService.shared.updateSettings(currentSettings)
-        }
     }
     
     public func completeOnboarding() {

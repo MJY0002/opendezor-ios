@@ -277,30 +277,6 @@ public struct SettingsView: View {
                     }
                     .listRowBackground(AppTheme.surface)
 
-                    // Security & Privacy Section
-                    Section {
-                        Toggle(isOn: Binding(
-                            get: { storage.settings.requireBiometrics },
-                            set: { v in
-                                storage.update { $0.requireBiometrics = v }
-                                if v {
-                                    appState.authenticateBiometrics()
-                                }
-                            }
-                        )) {
-                            settingsLabel(icon: "faceid", title: L("App-Sperre (Face ID / Touch ID)"))
-                        }
-                    } header: {
-                        Text(L("Sicherheit & Privatsphäre"))
-                            .appFont(size: 12, weight: .semibold)
-                            .foregroundColor(AppTheme.textSecondary)
-                    } footer: {
-                        Text(L("Sperrt OpenDezor beim Verlassen der App und erfordert biometrische Authentifizierung."))
-                            .appFont(size: 11)
-                            .foregroundColor(AppTheme.textTertiary)
-                    }
-                    .listRowBackground(AppTheme.surface)
-
                     // Data & Privacy Section
                     Section {
                         Button(action: {

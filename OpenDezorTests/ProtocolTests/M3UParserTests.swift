@@ -43,16 +43,6 @@ final class M3UParserTests: XCTestCase {
         XCTAssertEqual(items[1].displayName, "Nur Tvg Name")
     }
     
-    func testAppSettingsBiometrics() throws {
-        var settings = AppSettings()
-        XCTAssertFalse(settings.requireBiometrics)
-        
-        settings.requireBiometrics = true
-        let data = try JSONEncoder().encode(settings)
-        let decoded = try JSONDecoder().decode(AppSettings.self, from: data)
-        XCTAssertTrue(decoded.requireBiometrics)
-    }
-    
     @MainActor
     func testPlayerSubtitleOffsetAndSleepTimer() {
         let player = PlayerService.shared

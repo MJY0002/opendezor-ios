@@ -238,7 +238,6 @@ public struct AppSettings: Codable, Equatable {
     public var language: AppLanguage = .system
     public var colorScheme: AppColorScheme = .dark
     public var accent: AppAccent = .indigo
-    public var requireBiometrics: Bool = false
     public var vpnEnabled: Bool = false
     /// Connect the VPN on every cold start. Films and series only play through the VPN,
     /// so this spares the tap on the start screen.
@@ -266,7 +265,6 @@ public extension AppSettings {
         language = try c.decodeIfPresent(AppLanguage.self, forKey: .language) ?? language
         colorScheme = try c.decodeIfPresent(AppColorScheme.self, forKey: .colorScheme) ?? colorScheme
         accent = try c.decodeIfPresent(AppAccent.self, forKey: .accent) ?? accent
-        requireBiometrics = try c.decodeIfPresent(Bool.self, forKey: .requireBiometrics) ?? requireBiometrics
         vpnEnabled = try c.decodeIfPresent(Bool.self, forKey: .vpnEnabled) ?? vpnEnabled
         vpnAutoConnect = try c.decodeIfPresent(Bool.self, forKey: .vpnAutoConnect) ?? vpnAutoConnect
         selectedVpnServerId = try c.decodeIfPresent(String.self, forKey: .selectedVpnServerId) ?? selectedVpnServerId
