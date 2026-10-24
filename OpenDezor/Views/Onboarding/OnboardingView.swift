@@ -650,7 +650,7 @@ public struct OnboardingView: View {
         HStack {
             if appState.onboardingStep > 0 {
                 Button(action: {
-                    withAnimation { appState.onboardingStep -= 1 }
+                    withAnimation(AppMotion.standard) { appState.onboardingStep -= 1 }
                 }) {
                     Text(L("Zurück"))
                         .appFont(size: 15, weight: .medium)
@@ -664,7 +664,7 @@ public struct OnboardingView: View {
             
             Button(action: {
                 if appState.onboardingStep < Self.lastStep {
-                    withAnimation { appState.onboardingStep += 1 }
+                    withAnimation(AppMotion.standard) { appState.onboardingStep += 1 }
                 } else {
                     appState.completeOnboarding()
                 }

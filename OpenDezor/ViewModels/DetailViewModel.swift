@@ -101,7 +101,7 @@ public class DetailViewModel: ObservableObject {
             }
         } catch {
             // The catalog entry stays usable, so a failed detail fetch is not fatal.
-            print("Detail-Abruf fehlgeschlagen: \(error)")
+            print("Detail-Abruf fehlgeschlagen: \(error)"); DebugLog.log(.warning, "Quellen", "Detail-Abruf fehlgeschlagen: \(error)")
         }
     }
 
@@ -154,23 +154,43 @@ public class DetailViewModel: ObservableObject {
             return
         }
         
-        do {
-            let sources = try await client.fetchSources(endpoint: endpoint, item: item, episode: ep)
+        let cacheKey = "\(item.id)|\(ep.map { "\($0.season)x\($0.episode)" } ?? "-")"
+        // Hoster scrapers answer a second lookup for the same title with an empty list far
+        // more often than the first ("No streams found" when watching something again). One
+        // retry, then the list that worked last time, is better than a dead end.
+        var sources: [MediaSource] = []
+        var failure: Error?
+        for attempt in 0..<2 where sources.isEmpty {
+            if attempt > 0 { try? await Task.sleep(nanoseconds: 800_000_000) }
+            do {
+                sources = try await client.fetchSources(endpoint: endpoint, item: item, episode: ep)
+            } catch {
+                failure = error
+            }
+        }
+        if sources.isEmpty, let cached = Self.sourceCache[cacheKey],
+           Date().timeIntervalSince(cached.date) < Self.sourceCacheLifetime {
+            sources = cached.sources
+        }
+
+        if !sources.isEmpty {
+            Self.sourceCache[cacheKey] = (Date(), sources)
             self.availableSources = Self.sortedByPreferredQuality(
                 sources,
                 preferred: storage.settings.defaultQuality
             )
-            self.isLoadingSources = false
-        } catch {
+        } else if let embedded = item.sources, !embedded.isEmpty {
             // Fallback to item embedded sources if present
-            if let embedded = item.sources, !embedded.isEmpty {
-                self.availableSources = embedded
-            } else {
-                self.errorMessage = error.localizedDescription
-            }
-            self.isLoadingSources = false
+            self.availableSources = embedded
+        } else if let failure {
+            self.errorMessage = failure.localizedDescription
         }
+        self.isLoadingSources = false
     }
+
+    /// Last non-empty source list per title/episode; see `fetchSources`.
+    private static var sourceCache: [String: (date: Date, sources: [MediaSource])] = [:]
+    private static let sourceCacheLifetime: TimeInterval = 30 * 60
     
     /// Orders sources so the user's preferred quality comes first, then descending by
     /// resolution. Addons return them in arbitrary order, and the first entry is what
@@ -212,7 +232,7 @@ public class DetailViewModel: ObservableObject {
                 episode: episode ?? selectedEpisode
             )
         } catch {
-            print("Untertitel-Abruf fehlgeschlagen: \(error)")
+            print("Untertitel-Abruf fehlgeschlagen: \(error)"); DebugLog.log(.warning, "Quellen", "Untertitel-Abruf fehlgeschlagen: \(error)")
             return []
         }
     }

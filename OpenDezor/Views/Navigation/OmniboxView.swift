@@ -17,7 +17,7 @@ public struct OmniboxView: View {
                     .foregroundColor(AppTheme.textSecondary)
                     .appFont(size: 16)
                 
-                TextField(L("URL eingeben (z.B. mhub://...) oder suchen"), text: $viewModel.inputQuery)
+                TextField(L("Addon-URL oder suchen"), text: $viewModel.inputQuery)
                     .appFont(size: 14)
                     .foregroundColor(AppTheme.textPrimary)
                     .urlField()
@@ -35,7 +35,7 @@ public struct OmniboxView: View {
                     }
                 }
                 
-                if viewModel.isSearching || viewModel.isCheckingAddon {
+                if viewModel.isCheckingAddon {
                     ProgressView()
                         .scaleEffect(0.8)
                         .tint(AppTheme.cyanAccent)
@@ -124,10 +124,7 @@ public struct OmniboxView: View {
                         HStack(spacing: 8) {
                             ForEach(viewModel.recentSearches, id: \.self) { search in
                                 Button(action: {
-                                    viewModel.inputQuery = search
-                                    Task {
-                                        await viewModel.performSearch(query: search)
-                                    }
+                                    viewModel.openSearchPage(query: search)
                                 }) {
                                     HStack(spacing: 4) {
                                         Image(systemName: "clock.arrow.circlepath")
@@ -197,40 +194,5 @@ public struct OmniboxView: View {
         }
         .padding(14)
         .glassCard(cornerRadius: 16, strokeColor: AppTheme.cyanAccent.opacity(0.4), fillColor: AppTheme.surface.opacity(0.95))
-    }
-}
-
-/// The search results. They live in the page content, not in the pinned search bar:
-/// inside the bar they inherited its height and its shared row with the VPN pill.
-public struct OmniboxResultsView: View {
-    @ObservedObject var viewModel: OmniboxViewModel
-    public var onSelectMediaItem: (MediaItem) -> Void
-
-    public init(viewModel: OmniboxViewModel, onSelectMediaItem: @escaping (MediaItem) -> Void) {
-        self.viewModel = viewModel
-        self.onSelectMediaItem = onSelectMediaItem
-    }
-
-    public var body: some View {
-        if !viewModel.searchResults.isEmpty {
-            VStack(alignment: .leading, spacing: 10) {
-                Text("\(L("Suchergebnisse")) (\(viewModel.searchResults.count))")
-                    .appFont(size: 14, weight: .bold)
-                    .foregroundColor(AppTheme.textPrimary)
-                    .padding(.horizontal, 20)
-
-                ScrollView(.horizontal, showsIndicators: false) {
-                    LazyHStack(spacing: 12) {
-                        ForEach(viewModel.searchResults) { item in
-                            MediaCardView(item: item, shape: .portrait) {
-                                onSelectMediaItem(item)
-                            }
-                        }
-                    }
-                    .padding(.horizontal, 20)
-                }
-            }
-            .padding(.top, 8)
-        }
     }
 }

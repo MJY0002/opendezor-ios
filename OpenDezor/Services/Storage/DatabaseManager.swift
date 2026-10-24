@@ -27,7 +27,7 @@ public class DatabaseManager {
     
     private func openDatabase(path: String) {
         if sqlite3_open(path, &db) != SQLITE_OK {
-            print("Error opening database at \(path)")
+            print("Error opening database at \(path)"); DebugLog.log(.warning, "Datenbank", "Error opening database at \(path)")
             return
         }
         // WAL lets the periodic history writes during playback proceed without blocking
@@ -139,7 +139,7 @@ public class DatabaseManager {
         queue.sync {
             var errorPointer: UnsafeMutablePointer<CChar>?
             if sqlite3_exec(db, sql, nil, nil, &errorPointer) != SQLITE_OK, let errorPointer {
-                print("Error executing SQL script: \(String(cString: errorPointer))")
+                print("Error executing SQL script: \(String(cString: errorPointer))"); DebugLog.log(.warning, "Datenbank", "Error executing SQL script: \(String(cString: errorPointer))")
                 sqlite3_free(errorPointer)
             }
         }
@@ -172,13 +172,13 @@ public class DatabaseManager {
         queue.sync {
             var stmt: OpaquePointer?
             guard sqlite3_prepare_v2(db, sql, -1, &stmt, nil) == SQLITE_OK else {
-                print("Error preparing SQL: \(String(cString: sqlite3_errmsg(db)))")
+                print("Error preparing SQL: \(String(cString: sqlite3_errmsg(db)))"); DebugLog.log(.warning, "Datenbank", "Error preparing SQL: \(String(cString: sqlite3_errmsg(db)))")
                 return
             }
             defer { sqlite3_finalize(stmt) }
             bindValues(stmt)
             if sqlite3_step(stmt) != SQLITE_DONE {
-                print("Error executing SQL: \(String(cString: sqlite3_errmsg(db)))")
+                print("Error executing SQL: \(String(cString: sqlite3_errmsg(db)))"); DebugLog.log(.warning, "Datenbank", "Error executing SQL: \(String(cString: sqlite3_errmsg(db)))")
             }
         }
     }

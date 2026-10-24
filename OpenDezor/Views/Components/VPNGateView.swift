@@ -34,19 +34,41 @@ public struct VPNGateView: View {
             .animation(AppMotion.standard, value: vpn.isConnected)
 
             ScrollView(showsIndicators: false) {
-                VStack(spacing: verticalSizeClass == .compact ? 16 : 28) {
-                    Spacer(minLength: verticalSizeClass == .compact ? 12 : 60)
-                    shield.appearsStaggered(delay: 0.05)
-                    heading.appearsStaggered(delay: 0.15)
-                    serverPicker.appearsStaggered(delay: 0.25)
-                    connectButton.appearsStaggered(delay: 0.32)
-                    autoConnectToggle.appearsStaggered(delay: 0.39)
-                    laterButton.appearsStaggered(delay: 0.46)
-                    Spacer(minLength: 24)
+                if verticalSizeClass == .compact {
+                    // Landscape is too short for one column: the connect button would sit
+                    // below the fold. Intro on the left, actions on the right.
+                    HStack(alignment: .center, spacing: 32) {
+                        VStack(spacing: 16) {
+                            shield.appearsStaggered(delay: 0.05)
+                            heading.appearsStaggered(delay: 0.15)
+                        }
+                        .frame(maxWidth: .infinity)
+                        VStack(spacing: 14) {
+                            serverPicker.appearsStaggered(delay: 0.25)
+                            connectButton.appearsStaggered(delay: 0.32)
+                            autoConnectToggle.appearsStaggered(delay: 0.39)
+                            laterButton.appearsStaggered(delay: 0.46)
+                        }
+                        .frame(maxWidth: 380)
+                    }
+                    .padding(.horizontal, 24)
+                    .padding(.vertical, 12)
+                    .frame(maxWidth: .infinity)
+                } else {
+                    VStack(spacing: 28) {
+                        Spacer(minLength: 60)
+                        shield.appearsStaggered(delay: 0.05)
+                        heading.appearsStaggered(delay: 0.15)
+                        serverPicker.appearsStaggered(delay: 0.25)
+                        connectButton.appearsStaggered(delay: 0.32)
+                        autoConnectToggle.appearsStaggered(delay: 0.39)
+                        laterButton.appearsStaggered(delay: 0.46)
+                        Spacer(minLength: 24)
+                    }
+                    .padding(.horizontal, 24)
+                    .frame(maxWidth: 480)
+                    .frame(maxWidth: .infinity)
                 }
-                .padding(.horizontal, 24)
-                .frame(maxWidth: 480)
-                .frame(maxWidth: .infinity)
             }
         }
         .onAppear { pulse = !reduceMotion }

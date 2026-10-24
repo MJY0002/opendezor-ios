@@ -21,9 +21,6 @@ public struct DashboardView: View {
         ScrollView(.vertical, showsIndicators: false) {
             VStack(spacing: 20) {
                 
-                // Search results replace nothing — they sit above the page content.
-                OmniboxResultsView(viewModel: omnibox, onSelectMediaItem: onSelectMediaItem)
-
                 // Hero: a rotating carousel once several titles have wide artwork,
                 // otherwise the single banner.
                 if viewModel.heroItems.count > 1 {
@@ -72,6 +69,14 @@ public struct DashboardView: View {
         .safeAreaInset(edge: .top, spacing: 0) {
             HStack(spacing: 10) {
                 OmniboxView(viewModel: omnibox)
+                // Opens the full search page without typing first, to pick Filme/Serien/… up front.
+                Button { omnibox.openSearchPage() } label: {
+                    Image(systemName: "line.3.horizontal.decrease.circle")
+                        .appFont(size: 22)
+                        .foregroundColor(AppTheme.textSecondary)
+                        .frame(width: 36, height: 36)
+                }
+                .accessibilityLabel(L("Suchseite öffnen"))
                 VPNStatusPill()
                     .padding(.trailing, 16)
             }
@@ -80,6 +85,9 @@ public struct DashboardView: View {
             .background(.bar)
         }
         .glassBackground()
+        .navigationDestination(isPresented: $omnibox.isSearchPagePresented) {
+            SearchView(initialQuery: omnibox.searchPageQuery, onSelectItem: onSelectMediaItem)
+        }
         .refreshable {
             await viewModel.loadDashboard()
         }

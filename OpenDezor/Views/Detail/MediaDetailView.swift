@@ -211,7 +211,7 @@ public struct MediaDetailView: View {
                     .lineLimit(isDescriptionExpanded ? nil : 3)
                 
                 Button(action: {
-                    withAnimation { isDescriptionExpanded.toggle() }
+                    withAnimation(AppMotion.standard) { isDescriptionExpanded.toggle() }
                 }) {
                     Text(isDescriptionExpanded ? L("Weniger anzeigen") : L("Mehr anzeigen"))
                         .appFont(size: 12, weight: .semibold)

@@ -56,7 +56,7 @@ public class AddonManager: ObservableObject {
                         let (manifest, endpoint) = try await self.detector.detect(from: entry.url)
                         return (index, ActiveAddon(manifest: manifest, endpoint: endpoint, isEnabled: entry.isEnabled))
                     } catch {
-                        print("Failed to load saved addon \(entry.name) (\(entry.url)): \(error)")
+                        print("Failed to load saved addon \(entry.name) (\(entry.url)): \(error)"); DebugLog.log(.warning, "Addon", "Failed to load saved addon \(entry.name) (\(entry.url)): \(error)")
                         return (index, nil)
                     }
                 }

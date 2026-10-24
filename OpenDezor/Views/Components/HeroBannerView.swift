@@ -58,7 +58,8 @@ public struct HeroBannerView: View {
     /// In landscape on a phone the vertical size class is compact, where a 380pt banner
     /// would eat the whole screen. Shrinking it keeps the rows below reachable.
     @Environment(\.verticalSizeClass) private var verticalSizeClass
-    private var bannerHeight: CGFloat { verticalSizeClass == .compact ? 240 : 380 }
+    private var isCompact: Bool { verticalSizeClass == .compact }
+    private var bannerHeight: CGFloat { isCompact ? 240 : 380 }
 
     public let item: MediaItem
     public var onPlay: () -> Void
@@ -127,13 +128,14 @@ public struct HeroBannerView: View {
                 // artwork, not on the page, so it must not follow the text palette —
                 // `textPrimary` turned it dark-on-bright-photo in light mode.
                 Text(item.displayName)
-                    .appFont(size: 26, weight: .heavy)
+                    .appFont(size: isCompact ? 22 : 26, weight: .heavy)
                     .foregroundColor(.white)
-                    .lineLimit(2)
+                    .lineLimit(isCompact ? 1 : 2)
                     .shadow(color: .black.opacity(0.8), radius: 4, x: 0, y: 2)
 
-                // Synopsis Preview
-                if let desc = item.description?.value, !desc.isEmpty {
+                // Synopsis Preview. Landscape is only 240 pt tall: badges, title and buttons
+                // already fill it, so the synopsis stays on the detail page there.
+                if !isCompact, let desc = item.description?.value, !desc.isEmpty {
                     Text(desc)
                         .appFont(size: 13)
                         .foregroundColor(.white.opacity(0.85))
@@ -176,7 +178,7 @@ public struct HeroBannerView: View {
                 }
                 .padding(.top, 4)
             }
-            .padding(20)
+            .padding(isCompact ? 16 : 20)
             // Badges, title and buttons arrive in sequence, and again for each new hero.
             .appearsStaggered(delay: 0.15)
             .id(item.id)
@@ -284,28 +286,23 @@ public struct HeroCarouselView: View {
 
     public var body: some View {
         VStack(spacing: 12) {
-            ScrollView(.horizontal, showsIndicators: false) {
-                LazyHStack(spacing: 0) {
-                    ForEach(items) { item in
-                        HeroBannerView(
-                            item: item,
-                            onPlay: { onPlay(item) },
-                            onMoreInfo: { onMoreInfo(item) }
-                        )
-                        .containerRelativeFrame(.horizontal)
-                        // Neighbouring pages sink back and dim as they slide away.
-                        .scrollTransition(.interactive, axis: .horizontal) { effect, phase in
-                            effect
-                                .scaleEffect(phase.isIdentity || reduceMotion ? 1 : 0.9)
-                                .opacity(phase.isIdentity ? 1 : 0.5)
-                        }
-                        .id(item.id)
-                    }
+            // A paging TabView rather than a paged ScrollView: it re-pages itself on rotation
+            // and sizes its pages to the safe area. The ScrollView version left the page
+            // half off-screen after turning the device, because its pages were measured
+            // inside the safe area while the scroll view itself ran edge to edge.
+            TabView(selection: selection) {
+                ForEach(items) { item in
+                    HeroBannerView(
+                        item: item,
+                        onPlay: { onPlay(item) },
+                        onMoreInfo: { onMoreInfo(item) }
+                    )
+                    .tag(item.id)
                 }
-                .scrollTargetLayout()
             }
-            .scrollTargetBehavior(.paging)
-            .scrollPosition(id: $current)
+            #if os(iOS)
+            .tabViewStyle(.page(indexDisplayMode: .never))
+#endif
             .frame(height: bannerHeight + 24)
 
             pageIndicator
@@ -314,6 +311,13 @@ public struct HeroCarouselView: View {
         .onChange(of: current) { _, _ in cycle += 1 }
         // Restarts on every page change, whether the timer or a swipe caused it.
         .task(id: cycle) { await runDwell() }
+    }
+
+    private var selection: Binding<String> {
+        Binding(
+            get: { current ?? items.first?.id ?? "" },
+            set: { current = $0 }
+        )
     }
 
     private var pageIndicator: some View {
@@ -339,6 +343,7 @@ public struct HeroCarouselView: View {
         .accessibilityLabel("\(currentIndex + 1) / \(items.count)")
     }
 
+    @MainActor
     private func runDwell() async {
         progress = 0
         guard !reduceMotion, items.count > 1 else { return }

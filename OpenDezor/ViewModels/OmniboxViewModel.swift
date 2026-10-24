@@ -4,11 +4,12 @@ import Combine
 @MainActor
 public class OmniboxViewModel: ObservableObject {
     @Published public var inputQuery: String = ""
-    @Published public var isSearching: Bool = false
     @Published public var isCheckingAddon: Bool = false
     @Published public var detectedAddonManifest: AddonManifest? = nil
     @Published public var detectedAddonUrl: String? = nil
-    @Published public var searchResults: [MediaItem] = []
+    /// Drives the push to the full search page; the page runs the search itself.
+    @Published public var isSearchPagePresented: Bool = false
+    public private(set) var searchPageQuery: String = ""
     @Published public var errorMessage: String? = nil
     /// Set when a typed address turned out not to be an addon; the view offers to open it
     /// in the browser tab.
@@ -54,7 +55,7 @@ public class OmniboxViewModel: ObservableObject {
         if isInputUrl(trimmed) {
             await checkAndPromptAddon(url: trimmed)
         } else {
-            await performSearch(query: trimmed)
+            openSearchPage(query: trimmed)
         }
     }
     
@@ -92,23 +93,17 @@ public class OmniboxViewModel: ObservableObject {
         }
     }
     
-    public func performSearch(query: String) async {
-        isSearching = true
-        errorMessage = nil
-        storage.addSearchQuery(query)
-        
-        let results = await addonManager.searchAll(query: query)
-        self.searchResults = results
-        self.isSearching = false
+    public func openSearchPage(query: String = "") {
+        searchPageQuery = query
+        inputQuery = ""
+        isSearchPagePresented = true
     }
     
     public func clear() {
         pendingBrowserUrl = nil
         inputQuery = ""
-        searchResults = []
         detectedAddonManifest = nil
         detectedAddonUrl = nil
         errorMessage = nil
-        isSearching = false
     }
 }

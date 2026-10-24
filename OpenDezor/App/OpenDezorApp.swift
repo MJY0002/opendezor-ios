@@ -7,11 +7,16 @@ public struct OpenDezorApp: App {
     @StateObject private var storage = StorageService.shared
     @StateObject private var playerService = PlayerService.shared
     
+    @Environment(\.scenePhase) private var scenePhase
+
     public init() {}
     
     public var body: some Scene {
         WindowGroup {
             MainNavigationView()
+                .onChange(of: scenePhase) { _, phase in
+                    DebugLog.log(.info, "App", "Szene: \(phase)")
+                }
                 .onOpenURL { url in
                     appState.openURL(url)
                 }

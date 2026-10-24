@@ -79,7 +79,10 @@ public class VPNManager: ObservableObject {
     /// Mirrored into `VPNRoute`, which is what playback and addon fetches route through:
     /// a proxy that is set up but not yet proven never carries a stream.
     @Published public var isConnected: Bool = false {
-        didSet { VPNRoute.set(isConnected ? proxyDictionary() : nil) }
+        didSet {
+            VPNRoute.set(isConnected ? proxyDictionary() : nil)
+            if isConnected != oldValue { DebugLog.log(.info, "VPN", isConnected ? "verbunden (\(selectedServer.country) \(selectedServer.city))" : "getrennt") }
+        }
     }
     @Published public var currentPublicIP: String? = nil
     @Published public var proxyRevision: Int = 0

@@ -232,23 +232,6 @@ public struct OverlayControlsView: View {
                     .frame(width: 50, height: 50)
                     .background(Circle().fill(.ultraThinMaterial))
             }
-            
-            // Intro Skip (+85s)
-            Button(action: {
-                playerService.skipForward(seconds: 85)
-            }) {
-                HStack(spacing: 3) {
-                    Image(systemName: "forward.fill")
-                        .appFont(size: 11)
-                    Text("+85s")
-                        .appFont(size: 12, weight: .bold)
-                }
-                .accessibilityLabel(L("Intro überspringen (+85s)"))
-                .foregroundColor(.white)
-                .padding(.horizontal, 10)
-                .frame(height: 38)
-                .background(Capsule().fill(.ultraThinMaterial))
-            }
             }
         }
     }

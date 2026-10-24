@@ -91,7 +91,7 @@ public struct AccountView: View {
             HStack {
                 if viewMode != .connect {
                     Button(action: {
-                        withAnimation(.easeInOut(duration: 0.2)) {
+                        withAnimation(AppMotion.standard) {
                             viewMode = .connect
                             localErrorMessage = nil
                         }
@@ -235,7 +235,7 @@ public struct AccountView: View {
             
             // Switch to Email Login
             Button(action: {
-                withAnimation(.easeInOut(duration: 0.2)) {
+                withAnimation(AppMotion.standard) {
                     viewMode = .email
                     localErrorMessage = nil
                 }
@@ -254,7 +254,7 @@ public struct AccountView: View {
             
             // Switch to Token Login
             Button(action: {
-                withAnimation(.easeInOut(duration: 0.2)) {
+                withAnimation(AppMotion.standard) {
                     viewMode = .token
                     localErrorMessage = nil
                 }
@@ -356,7 +356,7 @@ public struct AccountView: View {
             
             // Forgot Password Link
             Button(action: {
-                withAnimation {
+                withAnimation(AppMotion.standard) {
                     showForgotPasswordHelp.toggle()
                 }
             }) {

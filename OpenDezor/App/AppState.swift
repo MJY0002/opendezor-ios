@@ -171,6 +171,7 @@ public class AppState: ObservableObject {
         // Also covers IPTV entries, whose stream URL sits on the item itself.
         await detail.fetchSources(for: episode)
 
+        DebugLog.log(detail.availableSources.isEmpty ? .error : .info, "Quellen", "\(detail.availableSources.count) Quellen gefunden\(detail.errorMessage.map { ", Fehler: \($0)" } ?? "")")
         guard !detail.availableSources.isEmpty else {
             showToast(
                 message: detail.errorMessage ?? L("Keine Videoquellen für diesen Titel gefunden."),
@@ -263,6 +264,7 @@ public class AppState: ObservableObject {
             if current.attempts >= Self.maxSourceAttempts { break }
             let source = current.remainingSources.removeFirst()
             current.attempts += 1
+            DebugLog.log(.info, "Wiedergabe", "Quelle \(current.attempts) von \(current.attempts + current.remainingSources.count): \(URL(string: source.url)?.host ?? "?") \(source.quality ?? "")")
             session = current
 
             let detail = DetailViewModel(item: current.item)
@@ -305,6 +307,7 @@ public class AppState: ObservableObject {
                     routedThroughVPN: true
                 )
                 installPlayerCallbacks()
+                DebugLog.log(.info, "Wiedergabe", "Stream bereit, Start bei \(Int(resumeAt)) s")
                 startPlayback(
                     item: current.item,
                     episode: current.episode,
@@ -315,7 +318,7 @@ public class AppState: ObservableObject {
                 return
             } catch {
                 // Resolving failed — try the next source rather than reporting straight away.
-                print("Quelle fehlgeschlagen (\(source.url)): \(error)")
+                print("Quelle fehlgeschlagen (\(source.url)): \(error)"); DebugLog.log(.warning, "Wiedergabe", "Quelle fehlgeschlagen (\(source.url)): \(error)")
                 current = session ?? current
                 continue
             }

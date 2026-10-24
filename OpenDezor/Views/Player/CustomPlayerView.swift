@@ -9,6 +9,8 @@ public struct CustomPlayerView: View {
     @State private var controlsTimer: Timer?
     @State private var doubleTapFeedbackLeft: Bool = false
     @State private var doubleTapFeedbackRight: Bool = false
+    @State private var feedbackHide: Task<Void, Never>?
+    @State private var seekHaptic = 0
     @State private var dismissedNextEpisodePill: Bool = false
     
     public init(onDismiss: @escaping () -> Void) {
@@ -40,7 +42,7 @@ public struct CustomPlayerView: View {
                             )
                             .padding(.horizontal, 32)
                             .padding(.bottom, showControls ? 120 : 40)
-                            .animation(.easeInOut(duration: 0.2), value: showControls)
+                            .animation(AppMotion.standard, value: showControls)
                     }
                     .allowsHitTesting(false)
                 }
@@ -79,7 +81,7 @@ public struct CustomPlayerView: View {
                                 }
                                 
                                 Button(action: {
-                                    withAnimation { dismissedNextEpisodePill = true }
+                                    withAnimation(AppMotion.standard) { dismissedNextEpisodePill = true }
                                 }) {
                                     Image(systemName: "xmark")
                                         .appFont(size: 11, weight: .bold)
@@ -134,7 +136,8 @@ public struct CustomPlayerView: View {
                         .transition(.scale.combined(with: .opacity))
                     }
                 }
-                .padding(.horizontal, 60)
+                // Out at the screen edge, clear of the centred 10 s / play buttons.
+                .padding(.horizontal, 12)
                 .allowsHitTesting(false)
                 
                 // Error Overlay
@@ -190,6 +193,8 @@ public struct CustomPlayerView: View {
                 toggleControlsVisibility()
             }
         }
+        // Sound, motion and haptic land on the same frame as the seek.
+        .sensoryFeedback(.impact(weight: .light), trigger: seekHaptic)
         .onAppear {
             startHideControlsTimer()
             dismissedNextEpisodePill = false
@@ -203,7 +208,7 @@ public struct CustomPlayerView: View {
     }
     
     private func toggleControlsVisibility() {
-        withAnimation(.easeInOut(duration: 0.25)) {
+        withAnimation(AppMotion.standard) {
             showControls.toggle()
         }
         if showControls {
@@ -218,7 +223,7 @@ public struct CustomPlayerView: View {
         controlsTimer = Timer.scheduledTimer(withTimeInterval: 6.0, repeats: false) { _ in
             Task { @MainActor in
                 if self.playerService.isPlaying && !self.playerService.isBuffering {
-                    withAnimation(.easeInOut(duration: 0.25)) {
+                    withAnimation(AppMotion.standard) {
                         self.showControls = false
                     }
                 }
@@ -228,25 +233,32 @@ public struct CustomPlayerView: View {
     
     private func handleDoubleTap(at location: CGPoint, totalWidth: CGFloat) {
         guard !playerService.isLive else { return }
-        if location.x < totalWidth / 2 {
-            // Left half: Rewind 10s
-            playerService.skipBackward(seconds: 10)
-            withAnimation(AppMotion.press) {
-                doubleTapFeedbackLeft = true
-            }
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.6) {
-                withAnimation { doubleTapFeedbackLeft = false }
-            }
+        let seconds = PlayerSeek.doubleTapSeconds(tapX: location.x, width: totalWidth)
+        if seconds < 0 {
+            playerService.skipBackward(seconds: -seconds)
+            withAnimation(AppMotion.press) { doubleTapFeedbackLeft = true }
         } else {
-            // Right half: Forward 10s
-            playerService.skipForward(seconds: 10)
-            withAnimation(AppMotion.press) {
-                doubleTapFeedbackRight = true
-            }
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.6) {
-                withAnimation { doubleTapFeedbackRight = false }
-            }
+            playerService.skipForward(seconds: seconds)
+            withAnimation(AppMotion.press) { doubleTapFeedbackRight = true }
+        }
+        seekHaptic += 1
+        feedbackHide?.cancel()
+        feedbackHide = Task { @MainActor in
+            try? await Task.sleep(nanoseconds: 700_000_000)
+            guard !Task.isCancelled else { return }
+            withAnimation(AppMotion.standard) { doubleTapFeedbackLeft = false; doubleTapFeedbackRight = false }
         }
         startHideControlsTimer()
+    }
+}
+
+/// Double-tap seeking. `tapX` and `width` come from the same view, so the split follows the
+/// current orientation: the left half is always the left half of what the user sees.
+enum PlayerSeek {
+    static let doubleTapStep: Double = 10
+
+    /// Negative seeks back, positive forward.
+    static func doubleTapSeconds(tapX: CGFloat, width: CGFloat) -> Double {
+        tapX < width / 2 ? -doubleTapStep : doubleTapStep
     }
 }

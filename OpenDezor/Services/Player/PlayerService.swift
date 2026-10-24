@@ -124,7 +124,7 @@ public class PlayerService: NSObject, ObservableObject {
             try audioSession.setCategory(.playback, mode: .moviePlayback, options: [.allowAirPlay, .allowBluetoothHFP])
             try audioSession.setActive(true)
         } catch {
-            print("Failed to set up AVAudioSession: \(error)")
+            print("Failed to set up AVAudioSession: \(error)"); DebugLog.log(.warning, "Player", "Failed to set up AVAudioSession: \(error)")
         }
         #endif
     }
@@ -239,6 +239,7 @@ public class PlayerService: NSObject, ObservableObject {
             let hasPicture = item.status == .readyToPlay && (self.player?.currentTime().seconds ?? 0) > 0.1
             guard !hasPicture else { return }
             self.isBuffering = false
+            DebugLog.log(.error, "Player", "Stream startet nicht (30 s ohne Bild)")
             if let handler = self.onPlaybackFailed {
                 handler(nil)
             } else {
@@ -253,6 +254,7 @@ public class PlayerService: NSObject, ObservableObject {
             guard let self = self else { return }
             Task { @MainActor in
                 if item.status == .readyToPlay {
+                    DebugLog.log(.info, "Player", "Bereit, Dauer \(Int(item.duration.isNumeric ? item.duration.seconds : 0)) s")
                     self.isBuffering = false
                     self.duration = item.duration.isNumeric ? item.duration.seconds : 0
                     self.isLive = item.duration.isIndefinite
@@ -262,6 +264,7 @@ public class PlayerService: NSObject, ObservableObject {
                         self.seek(to: start)
                     }
                 } else if item.status == .failed {
+                    DebugLog.log(.error, "Player", "Item fehlgeschlagen: \(item.error?.localizedDescription ?? "unbekannt")")
                     self.isBuffering = false
                     // Hand the failure to whoever is coordinating playback first; only if
                     // nobody handles it does the error surface in the player UI.
@@ -565,7 +568,7 @@ public class PlayerService: NSObject, ObservableObject {
                         self.loadedExternalCues = cues
                     }
                 } catch {
-                    print("Failed to load external subtitles: \(error)")
+                    print("Failed to load external subtitles: \(error)"); DebugLog.log(.warning, "Player", "Failed to load external subtitles: \(error)")
                 }
             }
         } else if let group = subtitle.group, let option = subtitle.option, let item = player?.currentItem {
@@ -673,7 +676,7 @@ extension PlayerService: @preconcurrency AVPictureInPictureControllerDelegate {
     @MainActor
     public func pictureInPictureController(_ pictureInPictureController: AVPictureInPictureController, failedToStartPictureInPictureWithError error: Error) {
         self.isPictureInPictureActive = false
-        print("PiP failed: \(error)")
+        print("PiP failed: \(error)"); DebugLog.log(.warning, "Player", "PiP failed: \(error)")
     }
 }
 #endif

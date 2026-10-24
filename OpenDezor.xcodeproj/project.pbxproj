@@ -13,6 +13,7 @@
 		EA10E331FDF88B10E07881AE /* DetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D4ABEDC95DE0022DC12E600 /* DetailViewModel.swift */; };
 		20BBF10BD7D8DF584DDCC979 /* LiveTVViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46B03D159465BEBC5D74D565 /* LiveTVViewModel.swift */; };
 		2623F0AC6E3E623AB0A01CCA /* OmniboxViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21EB017EFC8626ED47DCAE14 /* OmniboxViewModel.swift */; };
+		628A88052EFD0AE1232C4C07 /* SearchViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A50D4C96B977CE55134F4BB3 /* SearchViewModel.swift */; };
 		A875A74051DD15D77A7A604B /* AppState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1213681CC0B334750620B70F /* AppState.swift */; };
 		A3B4319EDB74FE24779661CA /* OpenDezorApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87D03A0D912FFA8534BEC50D /* OpenDezorApp.swift */; };
 		1659110F376616D277C8C638 /* AuthModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDE297E66D0A9049FBF2B11F /* AuthModels.swift */; };
@@ -24,12 +25,14 @@
 		DF994378012440255CC21994 /* MediaSubtitle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 333EF30E9CA1DE8195F0CED8 /* MediaSubtitle.swift */; };
 		84F25B603E480A0575144077 /* StorageModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 595D0FBF03796E14567573F1 /* StorageModels.swift */; };
 		E8A8C52B969E6C72D2D3724A /* AccountView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87AEC41F62A0882BA3F60C50 /* AccountView.swift */; };
+		2CB6B8F5802E85598F9BC634 /* DevPanelView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF205F9C25DE95102491F663 /* DevPanelView.swift */; };
 		01B2BC1BF0F1A7156DC00F14 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DD1B4C9DA924C7968C4E44A /* SettingsView.swift */; };
 		8A8DB725F5DD94EDD7752591 /* CatalogGridView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31AD92E66167449D144129BD /* CatalogGridView.swift */; };
 		BEB0739D03ADCC806621F41F /* FilterSheetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E7A7AB125AE5CDBD64B8769 /* FilterSheetView.swift */; };
 		599A5818745FDC4F35F8B7BA /* LibraryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 466F5C5BDB7D20C14390CB70 /* LibraryView.swift */; };
 		415AC9879A889891E5E3D8C9 /* MainNavigationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A351E7590B84F61904B285D /* MainNavigationView.swift */; };
 		C56448BB68C9B50F363758BF /* OmniboxView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 540A6409F923CFCF75F71B6B /* OmniboxView.swift */; };
+		2EC81C5B25730183D52E30D6 /* SearchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DDC6FAB07DD148E1C408CCA /* SearchView.swift */; };
 		237191412EA6A3C16AD04062 /* DashboardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E8279EAF198432AA7FC7E7F /* DashboardView.swift */; };
 		A840761ACAF52E65364323FE /* BrowserView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF3C416A0DBC9D7CD6D6B6F3 /* BrowserView.swift */; };
 		17503D812ED1F16F34D225C8 /* VPNSettingsSheetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82E00FFC7769917A3E361E8A /* VPNSettingsSheetView.swift */; };
@@ -67,6 +70,9 @@
 		052ABFF337C811861DE8357C /* DatabaseManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9373406D62854657352D6798 /* DatabaseManager.swift */; };
 		400B644E5B8A28E4DE488751 /* StorageService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 472C499CCEE564129521E509 /* StorageService.swift */; };
 		D96EB7C4C41F81DB8F9CECA5 /* TokenStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43A9AA9B0E20DDE156487172 /* TokenStore.swift */; };
+		EE0964D5D8BE95B57B74FFC4 /* DebugLog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 456D3948FFC9C98AC5FE0C46 /* DebugLog.swift */; };
+		D447789AFFBA5567D72535D9 /* DebugReport.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5124271F570DA06E26CD4DF /* DebugReport.swift */; };
+		39908E48430053647D6CAC46 /* DeviceDiagnostics.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D2E4E6C739F23CCA91B33BD /* DeviceDiagnostics.swift */; };
 		289815873252A8A80A1CB551 /* CustomResourceLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5918DE6FAE9A865CD49D9CFC /* CustomResourceLoader.swift */; };
 		DEE6367C96DD469F5E31400A /* PlayerService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C5C606966AE989A6688E0C9 /* PlayerService.swift */; };
 		24C34C97B5F23349F5D9A10C /* StreamProxyServer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 745E7BF945F35FD982589A47 /* StreamProxyServer.swift */; };
@@ -83,10 +89,13 @@
 		DA4270820863C8F05D49AE5B /* VPNManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 936090ED21A0C5DBCE3C967B /* VPNManagerTests.swift */; };
 		E0A3A00534401313CD8C9B98 /* StorageServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F05FFD02FB5EC3CEF42BC616 /* StorageServiceTests.swift */; };
 		73265B04BE5DFD9DE8E88B9D /* AddonE2ETests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B1AA9B962525E32EFE152B8 /* AddonE2ETests.swift */; };
+		7988A3BE4ADA4505C99F657B /* PlayerSeekTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CADB6D5F3750E3EB619FFE0A /* PlayerSeekTests.swift */; };
 		B2D65766C9C7C15BD5ABA4C1 /* PlayerServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A2F03B522CA285C456B9380 /* PlayerServiceTests.swift */; };
 		F123AD3D78BB04778B009F47 /* ResourceLoaderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5855960E8D4BFF74AD2FD8AD /* ResourceLoaderTests.swift */; };
 		F1CDA07951AE91BA90F2D48D /* StreamProxyTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3A0A192CAC2F0A5569B152C /* StreamProxyTests.swift */; };
 		E8DA78EDAB6FDA3EF62E58C4 /* SubtitleParserTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81315562F1BCE569F856600C /* SubtitleParserTests.swift */; };
+		D719A2F2E719EDCB45304F81 /* DebugLogTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89A2F125CAFC3B52F1089B7B /* DebugLogTests.swift */; };
+		C214BC8FACE8FE73B5855F17 /* SearchScopeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6B5BA2B08906923557F6311 /* SearchScopeTests.swift */; };
 		DD1C652A5557C873077A20AF /* ViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D82BF9E79B546C10B74072F /* ViewModelTests.swift */; };
 		8374E584A07097A7F9A49021 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8422F1B5C0821327E76963AD /* Assets.xcassets */; };
 /* End PBXBuildFile section */
@@ -112,6 +121,7 @@
 		9D4ABEDC95DE0022DC12E600 /* DetailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "DetailViewModel.swift"; path = "OpenDezor/ViewModels/DetailViewModel.swift"; sourceTree = SOURCE_ROOT; };
 		46B03D159465BEBC5D74D565 /* LiveTVViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "LiveTVViewModel.swift"; path = "OpenDezor/ViewModels/LiveTVViewModel.swift"; sourceTree = SOURCE_ROOT; };
 		21EB017EFC8626ED47DCAE14 /* OmniboxViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "OmniboxViewModel.swift"; path = "OpenDezor/ViewModels/OmniboxViewModel.swift"; sourceTree = SOURCE_ROOT; };
+		A50D4C96B977CE55134F4BB3 /* SearchViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "SearchViewModel.swift"; path = "OpenDezor/ViewModels/SearchViewModel.swift"; sourceTree = SOURCE_ROOT; };
 		1213681CC0B334750620B70F /* AppState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "AppState.swift"; path = "OpenDezor/App/AppState.swift"; sourceTree = SOURCE_ROOT; };
 		87D03A0D912FFA8534BEC50D /* OpenDezorApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "OpenDezorApp.swift"; path = "OpenDezor/App/OpenDezorApp.swift"; sourceTree = SOURCE_ROOT; };
 		CDE297E66D0A9049FBF2B11F /* AuthModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "AuthModels.swift"; path = "OpenDezor/Models/AuthModels.swift"; sourceTree = SOURCE_ROOT; };
@@ -123,12 +133,14 @@
 		333EF30E9CA1DE8195F0CED8 /* MediaSubtitle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "MediaSubtitle.swift"; path = "OpenDezor/Models/MediaSubtitle.swift"; sourceTree = SOURCE_ROOT; };
 		595D0FBF03796E14567573F1 /* StorageModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "StorageModels.swift"; path = "OpenDezor/Models/StorageModels.swift"; sourceTree = SOURCE_ROOT; };
 		87AEC41F62A0882BA3F60C50 /* AccountView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "AccountView.swift"; path = "OpenDezor/Views/Settings/AccountView.swift"; sourceTree = SOURCE_ROOT; };
+		EF205F9C25DE95102491F663 /* DevPanelView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "DevPanelView.swift"; path = "OpenDezor/Views/Settings/DevPanelView.swift"; sourceTree = SOURCE_ROOT; };
 		9DD1B4C9DA924C7968C4E44A /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "SettingsView.swift"; path = "OpenDezor/Views/Settings/SettingsView.swift"; sourceTree = SOURCE_ROOT; };
 		31AD92E66167449D144129BD /* CatalogGridView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "CatalogGridView.swift"; path = "OpenDezor/Views/Catalog/CatalogGridView.swift"; sourceTree = SOURCE_ROOT; };
 		7E7A7AB125AE5CDBD64B8769 /* FilterSheetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "FilterSheetView.swift"; path = "OpenDezor/Views/Catalog/FilterSheetView.swift"; sourceTree = SOURCE_ROOT; };
 		466F5C5BDB7D20C14390CB70 /* LibraryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "LibraryView.swift"; path = "OpenDezor/Views/Navigation/LibraryView.swift"; sourceTree = SOURCE_ROOT; };
 		8A351E7590B84F61904B285D /* MainNavigationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "MainNavigationView.swift"; path = "OpenDezor/Views/Navigation/MainNavigationView.swift"; sourceTree = SOURCE_ROOT; };
 		540A6409F923CFCF75F71B6B /* OmniboxView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "OmniboxView.swift"; path = "OpenDezor/Views/Navigation/OmniboxView.swift"; sourceTree = SOURCE_ROOT; };
+		0DDC6FAB07DD148E1C408CCA /* SearchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "SearchView.swift"; path = "OpenDezor/Views/Search/SearchView.swift"; sourceTree = SOURCE_ROOT; };
 		7E8279EAF198432AA7FC7E7F /* DashboardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "DashboardView.swift"; path = "OpenDezor/Views/Dashboard/DashboardView.swift"; sourceTree = SOURCE_ROOT; };
 		FF3C416A0DBC9D7CD6D6B6F3 /* BrowserView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "BrowserView.swift"; path = "OpenDezor/Views/Browser/BrowserView.swift"; sourceTree = SOURCE_ROOT; };
 		82E00FFC7769917A3E361E8A /* VPNSettingsSheetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "VPNSettingsSheetView.swift"; path = "OpenDezor/Views/Browser/VPNSettingsSheetView.swift"; sourceTree = SOURCE_ROOT; };
@@ -166,6 +178,9 @@
 		9373406D62854657352D6798 /* DatabaseManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "DatabaseManager.swift"; path = "OpenDezor/Services/Storage/DatabaseManager.swift"; sourceTree = SOURCE_ROOT; };
 		472C499CCEE564129521E509 /* StorageService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "StorageService.swift"; path = "OpenDezor/Services/Storage/StorageService.swift"; sourceTree = SOURCE_ROOT; };
 		43A9AA9B0E20DDE156487172 /* TokenStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "TokenStore.swift"; path = "OpenDezor/Services/Storage/TokenStore.swift"; sourceTree = SOURCE_ROOT; };
+		456D3948FFC9C98AC5FE0C46 /* DebugLog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "DebugLog.swift"; path = "OpenDezor/Services/Diagnostics/DebugLog.swift"; sourceTree = SOURCE_ROOT; };
+		A5124271F570DA06E26CD4DF /* DebugReport.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "DebugReport.swift"; path = "OpenDezor/Services/Diagnostics/DebugReport.swift"; sourceTree = SOURCE_ROOT; };
+		4D2E4E6C739F23CCA91B33BD /* DeviceDiagnostics.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "DeviceDiagnostics.swift"; path = "OpenDezor/Services/Diagnostics/DeviceDiagnostics.swift"; sourceTree = SOURCE_ROOT; };
 		5918DE6FAE9A865CD49D9CFC /* CustomResourceLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "CustomResourceLoader.swift"; path = "OpenDezor/Services/Player/CustomResourceLoader.swift"; sourceTree = SOURCE_ROOT; };
 		4C5C606966AE989A6688E0C9 /* PlayerService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "PlayerService.swift"; path = "OpenDezor/Services/Player/PlayerService.swift"; sourceTree = SOURCE_ROOT; };
 		745E7BF945F35FD982589A47 /* StreamProxyServer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "StreamProxyServer.swift"; path = "OpenDezor/Services/Player/StreamProxyServer.swift"; sourceTree = SOURCE_ROOT; };
@@ -182,10 +197,13 @@
 		936090ED21A0C5DBCE3C967B /* VPNManagerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "VPNManagerTests.swift"; path = "OpenDezorTests/ProtocolTests/VPNManagerTests.swift"; sourceTree = SOURCE_ROOT; };
 		F05FFD02FB5EC3CEF42BC616 /* StorageServiceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "StorageServiceTests.swift"; path = "OpenDezorTests/StorageTests/StorageServiceTests.swift"; sourceTree = SOURCE_ROOT; };
 		2B1AA9B962525E32EFE152B8 /* AddonE2ETests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "AddonE2ETests.swift"; path = "OpenDezorTests/E2ETests/AddonE2ETests.swift"; sourceTree = SOURCE_ROOT; };
+		CADB6D5F3750E3EB619FFE0A /* PlayerSeekTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "PlayerSeekTests.swift"; path = "OpenDezorTests/PlayerTests/PlayerSeekTests.swift"; sourceTree = SOURCE_ROOT; };
 		1A2F03B522CA285C456B9380 /* PlayerServiceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "PlayerServiceTests.swift"; path = "OpenDezorTests/PlayerTests/PlayerServiceTests.swift"; sourceTree = SOURCE_ROOT; };
 		5855960E8D4BFF74AD2FD8AD /* ResourceLoaderTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "ResourceLoaderTests.swift"; path = "OpenDezorTests/PlayerTests/ResourceLoaderTests.swift"; sourceTree = SOURCE_ROOT; };
 		B3A0A192CAC2F0A5569B152C /* StreamProxyTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "StreamProxyTests.swift"; path = "OpenDezorTests/PlayerTests/StreamProxyTests.swift"; sourceTree = SOURCE_ROOT; };
 		81315562F1BCE569F856600C /* SubtitleParserTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "SubtitleParserTests.swift"; path = "OpenDezorTests/PlayerTests/SubtitleParserTests.swift"; sourceTree = SOURCE_ROOT; };
+		89A2F125CAFC3B52F1089B7B /* DebugLogTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "DebugLogTests.swift"; path = "OpenDezorTests/ViewModelTests/DebugLogTests.swift"; sourceTree = SOURCE_ROOT; };
+		E6B5BA2B08906923557F6311 /* SearchScopeTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "SearchScopeTests.swift"; path = "OpenDezorTests/ViewModelTests/SearchScopeTests.swift"; sourceTree = SOURCE_ROOT; };
 		0D82BF9E79B546C10B74072F /* ViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "ViewModelTests.swift"; path = "OpenDezorTests/ViewModelTests/ViewModelTests.swift"; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
@@ -236,6 +254,7 @@
 				9D4ABEDC95DE0022DC12E600 /* DetailViewModel.swift */,
 				46B03D159465BEBC5D74D565 /* LiveTVViewModel.swift */,
 				21EB017EFC8626ED47DCAE14 /* OmniboxViewModel.swift */,
+				A50D4C96B977CE55134F4BB3 /* SearchViewModel.swift */,
 				1213681CC0B334750620B70F /* AppState.swift */,
 				87D03A0D912FFA8534BEC50D /* OpenDezorApp.swift */,
 				CDE297E66D0A9049FBF2B11F /* AuthModels.swift */,
@@ -247,12 +266,14 @@
 				333EF30E9CA1DE8195F0CED8 /* MediaSubtitle.swift */,
 				595D0FBF03796E14567573F1 /* StorageModels.swift */,
 				87AEC41F62A0882BA3F60C50 /* AccountView.swift */,
+				EF205F9C25DE95102491F663 /* DevPanelView.swift */,
 				9DD1B4C9DA924C7968C4E44A /* SettingsView.swift */,
 				31AD92E66167449D144129BD /* CatalogGridView.swift */,
 				7E7A7AB125AE5CDBD64B8769 /* FilterSheetView.swift */,
 				466F5C5BDB7D20C14390CB70 /* LibraryView.swift */,
 				8A351E7590B84F61904B285D /* MainNavigationView.swift */,
 				540A6409F923CFCF75F71B6B /* OmniboxView.swift */,
+				0DDC6FAB07DD148E1C408CCA /* SearchView.swift */,
 				7E8279EAF198432AA7FC7E7F /* DashboardView.swift */,
 				FF3C416A0DBC9D7CD6D6B6F3 /* BrowserView.swift */,
 				82E00FFC7769917A3E361E8A /* VPNSettingsSheetView.swift */,
@@ -290,6 +311,9 @@
 				9373406D62854657352D6798 /* DatabaseManager.swift */,
 				472C499CCEE564129521E509 /* StorageService.swift */,
 				43A9AA9B0E20DDE156487172 /* TokenStore.swift */,
+				456D3948FFC9C98AC5FE0C46 /* DebugLog.swift */,
+				A5124271F570DA06E26CD4DF /* DebugReport.swift */,
+				4D2E4E6C739F23CCA91B33BD /* DeviceDiagnostics.swift */,
 				5918DE6FAE9A865CD49D9CFC /* CustomResourceLoader.swift */,
 				4C5C606966AE989A6688E0C9 /* PlayerService.swift */,
 				745E7BF945F35FD982589A47 /* StreamProxyServer.swift */,
@@ -313,10 +337,13 @@
 				936090ED21A0C5DBCE3C967B /* VPNManagerTests.swift */,
 				F05FFD02FB5EC3CEF42BC616 /* StorageServiceTests.swift */,
 				2B1AA9B962525E32EFE152B8 /* AddonE2ETests.swift */,
+				CADB6D5F3750E3EB619FFE0A /* PlayerSeekTests.swift */,
 				1A2F03B522CA285C456B9380 /* PlayerServiceTests.swift */,
 				5855960E8D4BFF74AD2FD8AD /* ResourceLoaderTests.swift */,
 				B3A0A192CAC2F0A5569B152C /* StreamProxyTests.swift */,
 				81315562F1BCE569F856600C /* SubtitleParserTests.swift */,
+				89A2F125CAFC3B52F1089B7B /* DebugLogTests.swift */,
+				E6B5BA2B08906923557F6311 /* SearchScopeTests.swift */,
 				0D82BF9E79B546C10B74072F /* ViewModelTests.swift */,
 			);
 			name = OpenDezorTests;
@@ -366,7 +393,7 @@
 			isa = PBXProject;
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
-				LastUpgradeCheck = 1540;
+				LastUpgradeCheck = 2710;
 				TargetAttributes = {
 					147982BEBBBCF1EA792C8730 = {
 						CreatedOnToolsVersion = 15.4;
@@ -418,6 +445,7 @@
 				EA10E331FDF88B10E07881AE /* DetailViewModel.swift in Sources */,
 				20BBF10BD7D8DF584DDCC979 /* LiveTVViewModel.swift in Sources */,
 				2623F0AC6E3E623AB0A01CCA /* OmniboxViewModel.swift in Sources */,
+				628A88052EFD0AE1232C4C07 /* SearchViewModel.swift in Sources */,
 				A875A74051DD15D77A7A604B /* AppState.swift in Sources */,
 				A3B4319EDB74FE24779661CA /* OpenDezorApp.swift in Sources */,
 				1659110F376616D277C8C638 /* AuthModels.swift in Sources */,
@@ -429,12 +457,14 @@
 				DF994378012440255CC21994 /* MediaSubtitle.swift in Sources */,
 				84F25B603E480A0575144077 /* StorageModels.swift in Sources */,
 				E8A8C52B969E6C72D2D3724A /* AccountView.swift in Sources */,
+				2CB6B8F5802E85598F9BC634 /* DevPanelView.swift in Sources */,
 				01B2BC1BF0F1A7156DC00F14 /* SettingsView.swift in Sources */,
 				8A8DB725F5DD94EDD7752591 /* CatalogGridView.swift in Sources */,
 				BEB0739D03ADCC806621F41F /* FilterSheetView.swift in Sources */,
 				599A5818745FDC4F35F8B7BA /* LibraryView.swift in Sources */,
 				415AC9879A889891E5E3D8C9 /* MainNavigationView.swift in Sources */,
 				C56448BB68C9B50F363758BF /* OmniboxView.swift in Sources */,
+				2EC81C5B25730183D52E30D6 /* SearchView.swift in Sources */,
 				237191412EA6A3C16AD04062 /* DashboardView.swift in Sources */,
 				A840761ACAF52E65364323FE /* BrowserView.swift in Sources */,
 				17503D812ED1F16F34D225C8 /* VPNSettingsSheetView.swift in Sources */,
@@ -472,6 +502,9 @@
 				052ABFF337C811861DE8357C /* DatabaseManager.swift in Sources */,
 				400B644E5B8A28E4DE488751 /* StorageService.swift in Sources */,
 				D96EB7C4C41F81DB8F9CECA5 /* TokenStore.swift in Sources */,
+				EE0964D5D8BE95B57B74FFC4 /* DebugLog.swift in Sources */,
+				D447789AFFBA5567D72535D9 /* DebugReport.swift in Sources */,
+				39908E48430053647D6CAC46 /* DeviceDiagnostics.swift in Sources */,
 				289815873252A8A80A1CB551 /* CustomResourceLoader.swift in Sources */,
 				DEE6367C96DD469F5E31400A /* PlayerService.swift in Sources */,
 				24C34C97B5F23349F5D9A10C /* StreamProxyServer.swift in Sources */,
@@ -495,10 +528,13 @@
 				DA4270820863C8F05D49AE5B /* VPNManagerTests.swift in Sources */,
 				E0A3A00534401313CD8C9B98 /* StorageServiceTests.swift in Sources */,
 				73265B04BE5DFD9DE8E88B9D /* AddonE2ETests.swift in Sources */,
+				7988A3BE4ADA4505C99F657B /* PlayerSeekTests.swift in Sources */,
 				B2D65766C9C7C15BD5ABA4C1 /* PlayerServiceTests.swift in Sources */,
 				F123AD3D78BB04778B009F47 /* ResourceLoaderTests.swift in Sources */,
 				F1CDA07951AE91BA90F2D48D /* StreamProxyTests.swift in Sources */,
 				E8DA78EDAB6FDA3EF62E58C4 /* SubtitleParserTests.swift in Sources */,
+				D719A2F2E719EDCB45304F81 /* DebugLogTests.swift in Sources */,
+				C214BC8FACE8FE73B5855F17 /* SearchScopeTests.swift in Sources */,
 				DD1C652A5557C873077A20AF /* ViewModelTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

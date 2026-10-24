@@ -310,6 +310,29 @@ public struct SettingsView: View {
                     }
                     .listRowBackground(AppTheme.surface)
                     
+                    // Developer panel: open to everyone, see DevPanelView.
+                    Section {
+                        NavigationLink(destination: DevPanelView()) {
+                            HStack {
+                                Label(L("DEV-Panel"), systemImage: "ladybug")
+                                    .foregroundColor(AppTheme.textPrimary)
+                                Spacer()
+                                Text(DebugLog.shared.isEnabled ? L("Log an") : L("Log aus"))
+                                    .appFont(size: 12)
+                                    .foregroundColor(DebugLog.shared.isEnabled ? AppTheme.success : AppTheme.textTertiary)
+                            }
+                        }
+                    } header: {
+                        Text(L("Entwickler"))
+                            .appFont(size: 12, weight: .semibold)
+                            .foregroundColor(AppTheme.textSecondary)
+                    } footer: {
+                        Text(L("Fehler melden: Logging einschalten, das Problem nachstellen, Bericht exportieren."))
+                            .appFont(size: 11)
+                            .foregroundColor(AppTheme.textTertiary)
+                    }
+                    .listRowBackground(AppTheme.surface)
+
                     // App Information Section
                     Section {
                         HStack {

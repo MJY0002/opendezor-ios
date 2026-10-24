@@ -206,7 +206,7 @@ public struct BrowserView: View {
                 .transition(.move(edge: .trailing).combined(with: .opacity))
             }
         }
-        .animation(.easeInOut(duration: 0.2), value: addressFocused)
+        .animation(AppMotion.standard, value: addressFocused)
         .padding(.horizontal, 16)
         .padding(.top, 8)
         .padding(.bottom, 6)

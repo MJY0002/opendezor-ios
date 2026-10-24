@@ -68,7 +68,7 @@ public class LiveTVViewModel: ObservableObject {
                             if let g = item.group, !g.isEmpty { cats.insert(g) }
                         }
                     } catch {
-                        print("Failed to load IPTV catalog \(cat.id): \(error)")
+                        print("Failed to load IPTV catalog \(cat.id): \(error)"); DebugLog.log(.warning, "IPTV", "Failed to load IPTV catalog \(cat.id): \(error)")
                     }
                 }
             }
